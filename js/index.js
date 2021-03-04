@@ -3,6 +3,8 @@ const urlApi = "http://localhost:3001/facturas";
 (async () => {
   const datos = await fetch(urlApi);
   const datosParseados = await datos.json();
+  let baseTotal = 0;
+  let ivaTotal = 0;
   for (const factura of datosParseados) {
     const datosFactura = {};
     if (factura.tipo === "ingreso") {
@@ -43,16 +45,14 @@ const urlApi = "http://localhost:3001/facturas";
       if (datosFactura.vence !== "-" && diasFaltantes < 0) {
         facturaIngresada.querySelector(".vence").classList.replace("table-success", "table-danger");
       }
+      baseTotal += factura.base;
+      ivaTotal += iva;
       listaFacturas.append(facturaIngresada);
     }
-    baseTotal += datosFactura.base;
-    ivaTotal += datosFactura.iva;
   }
-
-  document.querySelector(".base-total").textContent = baseTotal;
-  document.querySelector(".iva-total").textContent = ivaTotal;
-  document.querySelector(".final-total").textContent = baseTotal + ivaTotal;
-
+  document.querySelector(".base-total").textContent = `${baseTotal}€`;
+  document.querySelector(".iva-total").textContent = `${ivaTotal}€`;
+  document.querySelector(".final-total").textContent = `${baseTotal + ivaTotal}€`;
 })();
 const base = document.querySelector(".dummy").cloneNode(true);
 base.classList.add("off");
