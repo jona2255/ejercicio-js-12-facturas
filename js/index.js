@@ -34,7 +34,7 @@ const urlApi = "http://localhost:3001/facturas";
       facturaIngresada.querySelector(".base").textContent = datosFactura.base;
       facturaIngresada.querySelector(".iva").textContent = datosFactura.iva;
       facturaIngresada.querySelector(".total").textContent = datosFactura.total;
-      facturaIngresada.querySelector("estado").textContent = datosFactura.estado;
+      facturaIngresada.querySelector(".estado").textContent = datosFactura.estado;
       facturaIngresada.querySelector(".vence").textContent = datosFactura.vence;
     }
   }
