@@ -29,5 +29,6 @@ const urlApi = "http://localhost:3001/facturas";
     }
   }
 })();
+
 const facturas = [];
 console.log(facturas);
