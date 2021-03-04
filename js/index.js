@@ -26,9 +26,26 @@ const urlApi = "http://localhost:3001/facturas";
         datosFactura.vence = diasFaltantes > 0 ? `${fechaVencimientoParseada} (faltan ${diasFaltantes} días)` : `${fechaVencimientoParseada} (hace ${diasFaltantes} días)`;
       }
       facturas.push(datosFactura);
+
+      const facturaIngresada = base.cloneNode(true);
+      facturaIngresada.querySelector(".numero").textContent = datosFactura.numero;
+      facturaIngresada.querySelector(".fecha").textContent = datosFactura.fecha;
+      facturaIngresada.querySelector(".concepto").textContent = datosFactura.concepto;
+      facturaIngresada.querySelector(".base").textContent = datosFactura.base;
+      facturaIngresada.querySelector(".iva").textContent = datosFactura.iva;
+      facturaIngresada.querySelector(".total").textContent = datosFactura.total;
+      facturaIngresada.querySelector("estado").textContent = datosFactura.estado;
+      facturaIngresada.querySelector(".vence").textContent = datosFactura.vence;
     }
   }
 })();
+
+
+const base = document.querySelector(".dummy").cloneNode(true);
+base.classList.add("off");
+
+document.querySelector(".lista-facturas").textContent = "";
+
 
 const facturas = [];
 console.log(facturas);
