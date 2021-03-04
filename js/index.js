@@ -45,7 +45,14 @@ const urlApi = "http://localhost:3001/facturas";
       }
       listaFacturas.append(facturaIngresada);
     }
+    baseTotal += factura.base;
+    ivaTotal += precioIva;
   }
+
+  document.querySelector(".base-total").textContent = baseTotal;
+  document.querySelector(".iva-total").textContent = ivaTotal;
+  document.querySelector(".final-total").textContent = baseTotal + ivaTotal;
+
 })();
 const base = document.querySelector(".dummy").cloneNode(true);
 base.classList.add("off");
