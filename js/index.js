@@ -19,11 +19,12 @@ const urlApi = "http://localhost:3001/facturas";
       datosFactura.estado = factura.abonada ? "Abonada" : "Pendiente";
       let fechaVencimientoParseada = luxon.DateTime.fromMillis(parseInt(factura.vencimiento)).c;
       fechaVencimientoParseada = `${fechaVencimientoParseada.day}/${fechaVencimientoParseada.month}/${fechaVencimientoParseada.year}`;
+      const diasFaltantes = Math.trunc((factura.vencimiento - luxon.DateTime.now()) / (60 * 60 * 24 * 1000));
+
       if (factura.abonada) {
         datosFactura.vence = "-";
       } else {
-        const diasFaltantes = Math.trunc((factura.vencimiento - luxon.DateTime.now()) / (60 * 60 * 24 * 1000));
-        datosFactura.vence = diasFaltantes > 0 ? `${fechaVencimientoParseada} (faltan ${diasFaltantes} días)` : `${fechaVencimientoParseada} (hace ${diasFaltantes} días)`;
+        datosFactura.vence = diasFaltantes > 0 ? `${fechaVencimientoParseada} (faltan ${diasFaltantes} días)` : `${fechaVencimientoParseada} (hace ${diasFaltantes * -1} días)`;
       }
       facturas.push(datosFactura);
 
@@ -34,18 +35,23 @@ const urlApi = "http://localhost:3001/facturas";
       facturaIngresada.querySelector(".base").textContent = datosFactura.base;
       facturaIngresada.querySelector(".iva").textContent = datosFactura.iva;
       facturaIngresada.querySelector(".total").textContent = datosFactura.total;
-      facturaIngresada.querySelector("estado").textContent = datosFactura.estado;
+      facturaIngresada.querySelector(".estado").textContent = datosFactura.estado;
       facturaIngresada.querySelector(".vence").textContent = datosFactura.vence;
+      if (datosFactura.estado === "Pendiente") {
+        facturaIngresada.querySelector(".estado").classList.replace("table-success", "table-danger");
+      }
+      if (datosFactura.vence !== "-" && diasFaltantes < 0) {
+        facturaIngresada.querySelector(".vence").classList.replace("table-success", "table-danger");
+      }
+      listaFacturas.append(facturaIngresada);
     }
   }
 })();
-
-
 const base = document.querySelector(".dummy").cloneNode(true);
 base.classList.add("off");
 
-document.querySelector(".lista-facturas").textContent = "";
-
+const listaFacturas = document.querySelector(".lista-facturas");
+listaFacturas.textContent = "";
 
 const facturas = [];
 console.log(facturas);
