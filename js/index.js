@@ -45,8 +45,8 @@ const urlApi = "http://localhost:3001/facturas";
       }
       listaFacturas.append(facturaIngresada);
     }
-    baseTotal += factura.base;
-    ivaTotal += precioIva;
+    baseTotal += datosFactura.base;
+    ivaTotal += datosFactura.iva;
   }
 
   document.querySelector(".base-total").textContent = baseTotal;
